@@ -1,0 +1,7 @@
+##
+POST http://localhost:7000/shop-ecommerce-v1/user/sign-up/
+Content-Type: application/json
+
+{
+    "ok": "user"
+}

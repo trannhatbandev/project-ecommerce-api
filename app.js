@@ -10,6 +10,8 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const { checkOverload } = require('./src/helpers/check.connect');
 const apiCore = require('./src/apis/core_v1/routers/router');
+const fileUpload = require('express-fileupload');
+const error = require('./src/middleware/error');
 
 app.enable('trust proxy');
 app.use(
@@ -21,10 +23,12 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+// app.use(fileUpload({useTempFiles: true}))
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 // parse application/json
 app.use(bodyParser.json());
+
 
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
@@ -41,5 +45,7 @@ require('./src/databases/mongodb/config');
 checkOverload();
 
 app.use('/shop-ecommerce-v1', apiCore);
+
+app.use(error)
 
 module.exports = app;

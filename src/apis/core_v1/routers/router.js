@@ -1,4 +1,5 @@
 const shopRouter = require('./shop.router')
+const userRouter = require('./user.router')
 
 const { Router } = require('express');
 
@@ -6,5 +7,6 @@ const { Router } = require('express');
 const baseRouter = Router();
 
 baseRouter.use('/shop', shopRouter);
+baseRouter.use('/user', userRouter);
 
 module.exports = baseRouter
